@@ -1,0 +1,33 @@
+<mvc:View controllerName="com.9b.userAccess.controller.DetailPages" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+<Page icon="sap-icon://nav-back">
+	<!--title="detailmaster"   -->
+	<!--<mvc:XMLView   viewName="app.practice.view.Home" />-->
+			
+<!--	<mvc:View controllerName="app.practice.controller.Home" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">-->
+	<Table id="taable" items="{jsonModel>/compressedData}">
+		<columns>
+			<Column>
+				<Text text="License"/>
+			</Column>
+			<Column>
+				<Text text="Status"/>
+			</Column>
+
+		</columns>
+		<items id="there">
+			<ColumnListItem >
+				<cells>
+					<Text text="{jsonModel>U_MetrcLicense}"/>
+					<Switch state="true"  change="onChangeActive" type="AcceptReject"/>
+					<!--<Switch state="{= ${jsonModel>switchStatus} === ture ? true : false}"  change="onChangeActive" type="AcceptReject"/>-->
+
+					<!--<Text text="{Address}"/>-->
+					<!--<Text text="{Country}"/>-->
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+<!--</mvc:View>-->
+
+</Page>
+</mvc:View>

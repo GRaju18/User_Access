@@ -1,0 +1,60 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout">
+	<Dialog id="changeGrowthPhase" busy="{jsonModel>/growthBusy}" class="sapUiSizeCompact" stretch="{device>/system/phone}" draggable="true">
+		<customHeader>
+			<Bar>
+				<contentMiddle>
+					<Label text="{i18n>ChangeGrowthPhase}"/>
+				</contentMiddle>
+			</Bar>
+		</customHeader>
+		<content>
+			<VBox>
+				<FlexBox class="sapUiSmallMargin" width="95%" justifyContent="Center">
+					<FlexBox alignItems="Center">
+						<Text text="Location" class="sapUiSmallMarginBeginEnd"/>
+						<ComboBox id="temLocationId" selectedKey="{jsonModel>/temChangeLoc}" width="100%"
+							items="{jsonModel>/ChangeLocationList}">
+							<core:Item key="{jsonModel>WarehouseCode}" text="{jsonModel>WarehouseName}"/>
+						</ComboBox>
+					</FlexBox>
+					<FlexBox alignItems="Center">
+						<Button type="Emphasized" text="Apply" press="onChangeGrowthTemApply" class="sapUiSmallMarginBeginEnd"/>
+					</FlexBox>
+				</FlexBox>
+				<Table busy="{jsonModel>/gPhaseBusy}" inset="false" mode="None" items="{ path: 'jsonModel>/cGrowthData',factory: '.productListItemGPhase'}"
+					width="100%">
+					<columns>
+						<Column width="6%">
+							<Label text="{i18n>BatchID}" design="Bold"/>
+						</Column>
+						<Column width="6%">
+							<Label text="{i18n>StrainName}" design="Bold"/>
+						</Column>
+						<Column width="6%">
+							<Label text="{i18n>AvailableQty}" design="Bold"/>
+						</Column>
+						<Column width="8%">
+							<Label text="{i18n>SelectGrowthPhase}" design="Bold"/>
+						</Column>
+						<Column width="8%">
+							<Label text="{i18n>SelectLocation}" design="Bold"/>
+						</Column>
+						<Column width="14%">
+							<Label text="{i18n>BeginningTag}" design="Bold"/>
+						</Column>
+						<Column width="12%">
+							<Label text="{i18n>EndingTag}" design="Bold"/>
+						</Column>
+						<Column width="5%"/>
+					</columns>
+				</Table>
+			</VBox>
+		</content>
+		<beginButton>
+			<Button type="Emphasized" text="{i18n>ChangeGrowthPhase}" press="confirmChangeGrowth" enabled="{= ${jsonModel>/growthBusy} ? false : true}"/>
+		</beginButton>
+		<endButton>
+			<Button type="Transparent" text="{i18n>Cancel}" press="onChangeGrowthPhaseClose"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>
