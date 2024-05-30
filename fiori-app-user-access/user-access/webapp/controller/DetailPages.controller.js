@@ -1,15 +1,15 @@
 sap.ui.define([
-	"com/9b/userAccess/controller/BaseController",
+	"com/9b/useracc/controller/BaseController",
 	"sap/ui/core/Fragment",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
-	"com/9b/userAccess/model/models",
+	"com/9b/useracc/model/models",
 	"sap/ndc/BarcodeScanner",
 	"sap/ui/core/format/DateFormat"
 ], function (BaseController, Fragment, Filter, FilterOperator, model, BarcodeScanner, DateFormat) {
 	"use strict";
 
-	return BaseController.extend("com.9b.userAccess.controller.DetailPages", {
+	return BaseController.extend("com.9b.useracc.controller.DetailPages", {
 		formatter: model,
 
 		onInit: function () {

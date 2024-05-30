@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.9b.userAccess.controller.DetailPages" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+<mvc:View controllerName="com.9b.useracc.controller.DetailPages" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
 <Page icon="sap-icon://nav-back">
 	<!--title="detailmaster"   -->
 	<!--<mvc:XMLView   viewName="app.practice.view.Home" />-->

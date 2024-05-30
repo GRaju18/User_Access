@@ -10,7 +10,7 @@ sap.ui.define([
 ], function (Controller, UIComponent, History, MessageBox, Filter, exportLibrary, Spreadsheet) {
 	"use strict";
 	var EdmType = exportLibrary.EdmType;
-	return Controller.extend("com.9b.userAccess.controller.BaseController", {
+	return Controller.extend("com.9b.useracc.controller.BaseController", {
 		/**
 		 * Convenience method for accessing the router.
 		 * @public

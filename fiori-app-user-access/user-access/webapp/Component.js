@@ -1,13 +1,13 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
-	"com/9b/userAccess/model/models",
+	"com/9b/useracc/model/models",
 	"sap/f/FlexibleColumnLayoutSemanticHelper",
 	"sap/ui/model/json/JSONModel"
 ], function (UIComponent, Device, models, FlexibleColumnLayoutSemanticHelper, JSONModel) {
 	"use strict";
 
-	return UIComponent.extend("com.9b.userAccess.Component", {
+	return UIComponent.extend("com.9b.useracc.Component", {
 
 		metadata: {
 			manifest: "json"
@@ -114,7 +114,7 @@ sap.ui.define([
 		_getDialog: function () {
 			if (!this.dialog) {
 				//this.dialog = sap.ui.xmlfragment("login.view.otp", this);
-				this.dialog = sap.ui.xmlfragment("sessionDialog", "com.9b.userAccess.view.fragments.SessionTimeoutDialog", this);
+				this.dialog = sap.ui.xmlfragment("sessionDialog", "com.9b.useracc.view.fragments.SessionTimeoutDialog", this);
 			}
 			return this.dialog;
 		},

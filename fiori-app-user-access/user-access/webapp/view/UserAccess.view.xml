@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.9b.userAccess.controller.UserAccess" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f"
+<mvc:View controllerName="com.9b.useracc.controller.UserAccess" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f"
 	xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns:table="sap.ui.table" xmlns:grid="sap.ui.layout.cssgrid"
 	xmlns:viz.data="sap.viz.ui5.data" xmlns:viz="sap.viz.ui5.controls" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
 	xmlns:commons="sap.suite.ui.commons" xmlns:tnt="sap.tnt">
@@ -6,7 +6,7 @@
 		<masterPages>
 			<Page>
 					<Text class="tableTitle" id="tableHeader" text="Users"/>
-				<SearchField id="searchFieldName" liveChange="onSearch6" width="40rem"/>
+				<SearchField id="searchFieldName" liveChange="onSearch6"/>
 				<List id="labResultsTable" items="{path:'jsonModel>/cloneTableData'}" selectionChange=".handleRowSelection" mode="SingleSelectMaster"
 					includeItemInSelection="true">
 					<StandardListItem title="{jsonModel>UserName}" description="{jsonModel>UserCode}"/>
@@ -75,7 +75,7 @@
 		</detailPages>
 	</SplitApp>
 </mvc:View>
-<!--<mvc:View controllerName="com.9b.userAccess.controller.LabResults" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f"-->
+<!--<mvc:View controllerName="com.9b.useracc.controller.LabResults" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f"-->
 <!--	xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns:table="sap.ui.table" xmlns:grid="sap.ui.layout.cssgrid"-->
 <!--	xmlns:viz.data="sap.viz.ui5.data" xmlns:viz="sap.viz.ui5.controls" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"-->
 <!--	xmlns:commons="sap.suite.ui.commons" xmlns:tnt="sap.tnt">-->
