@@ -9,24 +9,11 @@ sap.ui.define([
 ], function (BaseController, Fragment, Filter, FilterOperator, model, BarcodeScanner, DateFormat) {
 	"use strict";
 
-	return BaseController.extend("com.9b.userAccess.controller.LabResults", {
+	return BaseController.extend("com.9b.userAccess.controller.UserAccess", {
 		formatter: model,
 
 		onInit: function () {
 			this.getAppConfigData();
-			// var labResultsTable = this.getView().byId("labResultsTable");
-			// var tableHeader = this.byId("tableHeader");
-			// labResultsTable.addEventDelegate({
-			// 	onAfterRendering: function () {
-			// 		var oBinding = this.getBinding("rows");
-			// 		oBinding.attachChange(function (oEvent) {
-			// 			var oSource = oEvent.getSource();
-			// 			var count = oSource.iLength; //Will fetch you the filtered rows length
-			// 			var totalCount = oSource.oList.length;
-			// 			tableHeader.setText("Batches (" + count + "/" + totalCount + ")");
-			// 		});
-			// 	}
-			// }, labResultsTable);
 			this.combinedFilter = [];
 			this.getOwnerComponent().getRouter(this).attachRoutePatternMatched(this._objectMatched, this);
 			var that = this;
@@ -36,7 +23,7 @@ sap.ui.define([
 		},
 
 		_objectMatched: function (oEvent) {
-			if (oEvent.getParameter("name") === "labResults") {
+			if (oEvent.getParameter("name") === "userAccess") {
 				sap.ui.core.BusyIndicator.hide();
 				// this.getView().byId("labResultsTable").clearSelection();
 				this.loadLicenseData();
@@ -97,7 +84,7 @@ sap.ui.define([
 			this.readServiecLayer("/b1s/v2/Users" + fields, function (data) {
 
 				jsonModel.setProperty("/cloneTableData", data.value);
-					this.byId("tableHeader").setText("Users (" + data.value.length + "/" + data.value.length + ")");
+				this.byId("tableHeader").setText("Users (" + data.value.length + "/" + data.value.length + ")");
 
 			});
 		},
@@ -108,8 +95,7 @@ sap.ui.define([
 			jsonModel.setProperty("/compressedData", "");
 			// var docNo = evt.getParameter("rowContext").getObject().U_License;
 			var docNo = evt.getParameter("listItem").getBindingContext("jsonModel").getObject().U_License;
-			
-			
+
 			jsonModel.setProperty("/oClickedRowData", evt.getParameter("listItem").getBindingContext("jsonModel").getObject());
 			var oClickedRowData = JSON.parse(docNo);
 			var compressedData = [];
@@ -312,7 +298,7 @@ sap.ui.define([
 			//this.byId("releaseTo").setSelectedKey("");
 			//this.byId("search").setValue();
 		},
-		
+
 		onSearch6: function (oEvent) {
 			var oTableSearchState = [],
 				sQuery = oEvent.getParameter("newValue");

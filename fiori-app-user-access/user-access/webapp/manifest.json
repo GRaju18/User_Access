@@ -86,11 +86,11 @@
 				}
 			},
 			"routes": [{
-					"name": "labResults",
+					"name": "userAccess",
 					"pattern": "",
 					"titleTarget": "",
 					"greedy": false,
-					"target": ["labResults"]
+					"target": ["userAccess"]
 				},
 				{
 					"name": "DetailPages",
@@ -99,11 +99,11 @@
 				}
 			],
 			"targets": {
-				"labResults": {
+				"userAccess": {
 					"viewType": "XML",
 					"transition": "slide",
 					"clearControlAggregation": true,
-					"viewName": "LabResults",
+					"viewName": "UserAccess",
 					"controlAggregation": "pages",
 					"controlId": "app"
 				},
