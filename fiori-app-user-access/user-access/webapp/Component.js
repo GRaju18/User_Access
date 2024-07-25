@@ -47,11 +47,11 @@ sap.ui.define([
 			var jsonModel = new JSONModel({
 				strainList: [],
 				createMode: false,
-				serLayerbaseUrl: "https://glasshouseweb.seedandbeyond.com:50000",
+				serLayerbaseUrl: "https://ghdev.seedandbeyond.com:50000",
 				userAuthPayload: {
-					"CompanyDB": "QAS",
-					"UserName": "aag11153",
-					"Password": "#!GLaSs@HoUsE!#3579!#"
+					"CompanyDB": "DEV",
+					"UserName": "aag11163",
+					"Password": "#!GLaSs@HoUsE!#9174!#"
 				},
 				
 				//set the app navigation URL model
