@@ -4,9 +4,9 @@
 	xmlns:commons="sap.suite.ui.commons" xmlns:tnt="sap.tnt">
 	<SplitApp id="SplitApp">
 		<masterPages>
-			<Page>
+			<Page class="myCustomPageMargin">
 					<Text class="tableTitle" id="tableHeader" text="Users"/>
-				<SearchField id="searchFieldName" liveChange="onSearch6"/>
+				<SearchField id="searchFieldName" liveChange="onSearch6" width = "92%"/>
 				<List id="labResultsTable" items="{path:'jsonModel>/cloneTableData'}" selectionChange=".handleRowSelection" mode="SingleSelectMaster"
 					includeItemInSelection="true">
 					<StandardListItem title="{jsonModel>UserName}" description="{jsonModel>UserCode}"/>

@@ -6,6 +6,11 @@
     border-radius: 0;
 }
 
+.myCustomPageMargin {
+    margin-left: 20px; 
+    margin-bottom: 40px;
+}
+
 .sapMIBar-CTX .sapMLabel{
 	font-size: 1.2rem;
     font-weight: 600;
