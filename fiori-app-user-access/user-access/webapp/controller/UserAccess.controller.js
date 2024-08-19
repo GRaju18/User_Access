@@ -55,6 +55,7 @@ sap.ui.define([
 				jsonModel.setProperty("/licenseList", data.value);
 				jsonModel.setProperty("/sLinObj", data.value[0]);
 				that.loadMasterData();
+				that.binLocationsGetCall();
 			});
 		},
 
@@ -63,6 +64,16 @@ sap.ui.define([
 			var sObj = evt.getParameter("selectedItem").getBindingContext("jsonModel").getObject();
 			jsonModel.setProperty("/sLinObj", sObj);
 			this.getView().byId("labResultsTable").clearSelection();
+		},
+
+		binLocationsGetCall: function () {
+			var that = this;
+			var jsonModel = this.getOwnerComponent().getModel("jsonModel");
+			var fields = "?$select=U_MetrcLicense,U_MetrcLocation,Sublevel2,BinCode,AbsEntry,Warehouse";
+			this.readServiecLayer("/b1s/v2/BinLocations" + fields, function (data) {
+				jsonModel.setProperty("/binlocationsData", data.value);
+			});
+
 		},
 
 		loadMasterData: function (filters) {
@@ -80,7 +91,8 @@ sap.ui.define([
 			// 	filters = "?$filter=U_NLFID eq " + "'" + licenseNo + "' and U_NCPST eq 'X'  and (" + filters + ") and and U_NCQTY ne 0";
 			// }
 			// https://glasshouseweb.seedandbeyond.com:50000/b1s/v1/Users?$select=InternalKey,UserCode,UserName,U_License
-			var fields = "?$select=InternalKey,UserCode,UserName,U_License";
+			// var fields = "?$select=InternalKey,UserCode,UserName,U_License";
+			var fields = "?$select=InternalKey,UserCode,UserName,U_License&$orderby=UserName asc";
 			this.readServiecLayer("/b1s/v2/Users" + fields, function (data) {
 
 				jsonModel.setProperty("/cloneTableData", data.value);
@@ -91,7 +103,9 @@ sap.ui.define([
 
 		handleRowSelection: function (evt) {
 			var that = this;
+			this.loadMasterData();
 			var jsonModel = this.getOwnerComponent().getModel("jsonModel");
+			var binlocationsData = jsonModel.getProperty("/binlocationsData");
 			jsonModel.setProperty("/compressedData", "");
 			// var docNo = evt.getParameter("rowContext").getObject().U_License;
 			var docNo = evt.getParameter("listItem").getBindingContext("jsonModel").getObject().U_License;
@@ -103,73 +117,64 @@ sap.ui.define([
 			// https://glasshouseweb.seedandbeyond.com:50000/b1s/v1/Users?$select=InternalKey,UserCode,UserName,U_License
 			var fields = "?$select=U_MetrcLicense,U_MetrcLocation,Sublevel2,BinCode,AbsEntry,Warehouse";
 			this.getView().setBusy(true);
-			this.readServiecLayer("/b1s/v2/BinLocations" + fields, function (data) {
-				var locations = [];
-				$.each(data.value, function (i, n) {
-					n.switchStatus = false;
-					if (n.U_MetrcLicense != null) {
-						locations.push(n);
+
+			// this.readServiecLayer("/b1s/v2/BinLocations" + fields, function (data) {
+			var locations = [];
+			$.each(binlocationsData, function (i, n) {
+				n.switchStatus = false;
+				if (n.U_MetrcLicense != null) {
+					locations.push(n);
+				}
+			});
+
+			// jsonModel.setProperty("/binLocationData", locations);
+			this.getView().setBusy(false);
+			if (oClickedRowData != null) {
+				$.each(oClickedRowData, function (i, obj) {
+
+					// if ( obj.U_License != null && JSON.parse(obj.U_License).length > 0) {
+					if (obj.key != null && obj.key != undefined) {
+						$.each(locations, function (j, sObj) {
+							// $.each(obj.key , function(k,m){
+							if (obj.key == sObj.U_MetrcLicense && sObj.U_MetrcLicense != null) {
+								compressedData.push(sObj);
+							}
+							// })
+							// if (obj.U_License != null &&  sObj.U_MetrcLicense != null && obj.U_License == sObj.U_MetrcLicense) {
+							// 	compressedData.push(sObj);
+							// }
+
+						});
+					}
+					// var returnObj = $.grep(data.value, function (ele) {
+					// 	if (obj.U_License == ele.U_MetrcLicense) {
+					// 		return ele;
+					// 	}
+					// });
+					// if(returnObj.length > 0){
+					// 	compressedData.push(returnObj[0]);
+					// }
+				});
+			}
+			var insideArr = [];
+			var data = that.removeDuplicateNames(compressedData);
+			$.each(data, function (j, k) {
+				k.switchStatus = true;
+				$.each(locations, function (i, m) {
+					if (k.U_MetrcLicense != m.U_MetrcLicense) {
+						insideArr.push(m);
 					}
 				});
-
-				jsonModel.setProperty("/binLocationData", locations);
-
-				this.getView().setBusy(false);
-				if (oClickedRowData != null) {
-					$.each(oClickedRowData, function (i, obj) {
-
-						// if ( obj.U_License != null && JSON.parse(obj.U_License).length > 0) {
-
-						if (obj.key != null && obj.key != undefined) {
-							$.each(locations, function (j, sObj) {
-
-								// $.each(obj.key , function(k,m){
-								if (obj.key == sObj.U_MetrcLicense && sObj.U_MetrcLicense != null) {
-
-									compressedData.push(sObj);
-
-								}
-								// })
-								// if (obj.U_License != null &&  sObj.U_MetrcLicense != null && obj.U_License == sObj.U_MetrcLicense) {
-								// 	compressedData.push(sObj);
-								// }
-
-							});
-						}
-
-						// var returnObj = $.grep(data.value, function (ele) {
-						// 	if (obj.U_License == ele.U_MetrcLicense) {
-						// 		return ele;
-						// 	}
-						// });
-
-						// if(returnObj.length > 0){
-						// 	compressedData.push(returnObj[0]);
-						// }
-
-					});
-				}
-				var insideArr = [];
-				var data = that.removeDuplicateNames(compressedData);
-				$.each(data, function (j, k) {
-					k.switchStatus = true;
-
-					$.each(locations, function (i, m) {
-						if (k.U_MetrcLicense != m.U_MetrcLicense) {
-							insideArr.push(m);
-						}
-					});
-
-				});
-
-				var compressLocationData = that.removeDuplicateNames(locations);
-				var combinedArray = compressLocationData.concat(data);
-				var displayLisense = that.removeDuplicateNames(combinedArray);
-
-				// jsonModel.setProperty("/compressedData", data);
-				jsonModel.setProperty("/compressedData", displayLisense);
-
 			});
+
+			var compressLocationData = that.removeDuplicateNames(locations);
+			var combinedArray = compressLocationData.concat(data);
+			var displayLisense = that.removeDuplicateNames(combinedArray);
+
+			// jsonModel.setProperty("/compressedData", data);
+			jsonModel.setProperty("/compressedData", displayLisense);
+
+			// });
 
 		},
 

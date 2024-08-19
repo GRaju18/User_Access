@@ -3,6 +3,7 @@
 	xmlns:viz.data="sap.viz.ui5.data" xmlns:viz="sap.viz.ui5.controls" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
 	xmlns:commons="sap.suite.ui.commons" xmlns:tnt="sap.tnt">
 	<SplitApp id="SplitApp">
+		
 		<masterPages>
 			<Page class="myCustomPageMargin">
 					<Text class="tableTitle" id="tableHeader" text="Users"/>
