@@ -3,52 +3,21 @@
 	xmlns:viz.data="sap.viz.ui5.data" xmlns:viz="sap.viz.ui5.controls" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
 	xmlns:commons="sap.suite.ui.commons" xmlns:tnt="sap.tnt">
 	<SplitApp id="SplitApp">
-		
 		<masterPages>
 			<Page class="myCustomPageMargin">
-					<Text class="tableTitle" id="tableHeader" text="Users"/>
-				<SearchField id="searchFieldName" liveChange="onSearch6" width = "92%"/>
+				<Text class="tableTitle" id="tableHeader" text="Users"/>
+				<SearchField id="searchFieldName" liveChange="onSearch6" width="92%"/>
 				<List id="labResultsTable" items="{path:'jsonModel>/cloneTableData'}" selectionChange=".handleRowSelection" mode="SingleSelectMaster"
 					includeItemInSelection="true">
 					<StandardListItem title="{jsonModel>UserName}" description="{jsonModel>UserCode}"/>
 				</List>
-				<!--<table:Table class="uiTableTable" id="labResultsTable" selectionMode="Single" rowSelectionChange="handleRowSelection" cellClick="cellClick"-->
-				<!--	visibleRowCountMode="Auto" rows="{path:'jsonModel>/cloneTableData'}" customFilter="onFilterTable">-->
-				<!--	<table:extension>-->
-				<!--		<OverflowToolbar>-->
-				<!--			<Text class="tableTitle" id="tableHeader" text="{i18n>Batches}"/>-->
-				<!--			<ToolbarSpacer/>-->
-				<!--			<MultiInput width="25rem" placeholder="Search" tokenUpdate="tokenUpdateMultiInput" submit="onSubmitMultiInput" showValueHelp="false"-->
-				<!--				liveChange="onChangeMultiInput" id="searchFieldTable" enableMultiLineMode="true"/>-->
-				<!--			<Button text="{i18n>ClearAllFilters}" press="clearAllFilters"/>-->
-				<!--			<Text class="sapMTBSeparator"/>-->
-				<!--			<Button text="{i18n>ReceiveClones}" press="receiveClones" type="Default" visible="{jsonModel>/recClone}"/>-->
-				<!--		</OverflowToolbar>-->
-				<!--		<OverflowToolbar visible="false" id="searchFieldTable2" active="true" design="Info" height="2rem" press="onToolbarPress"-->
-				<!--			ariaLabelledBy="myText">-->
-				<!--			<Text text="{i18n>FilteredBy} : "/>-->
-				<!--			<Text id="searchFieldTable1" text="{i18n>Thereshouldbenointeractiveelementsinthetoolbar}"/>-->
-				<!--			<ToolbarSpacer/>-->
-				<!--			<core:Icon press="onCloseRefreshChart" src="sap-icon://undo" width="2rem"/>-->
-				<!--		</OverflowToolbar>-->
-				<!--	</table:extension>-->
-				<!--	<table:columns>-->
-				<!--		<table:Column id="UserNameboth" sortProperty="UserName" filterProperty="UserName" tooltip="UserName" width="40rem">-->
-				<!--			<Label text="User Name" design="Bold"/>-->
-				<!--			<table:template>-->
-				<!--				<Text text="{jsonModel>UserName}" wrapping="true"/>-->
-				<!--				<VBox>-->
-				<!--					<Text text="{jsonModel>UserName}" wrapping="false" class="usernameText"/>-->
-				<!--					<Text text="{jsonModel>UserCode}" wrapping="false" class="usercodeText"/>-->
-				<!--				</VBox>-->
-				<!--			</table:template>-->
-				<!--		</table:Column>-->
-				<!--	</table:columns>-->
-				<!--</table:Table>-->
 			</Page>
 		</masterPages>
 		<detailPages>
 			<Page>
+				<headerContent>
+					<Button type="Emphasized" text="Edit" press="handleEdit"/>
+				</headerContent>
 				<content>
 					<Table id="taable" items="{jsonModel>/compressedData}">
 						<columns>
@@ -63,81 +32,21 @@
 							<ColumnListItem >
 								<cells>
 									<Text text="{jsonModel>U_MetrcLicense}"/>
-									<!--<Switch state="true"  change="onChangeActive" type="AcceptReject"/>-->
-									<Switch state="{= ${jsonModel>switchStatus} === true ? true : false}" change="onChangeActive" type="AcceptReject"/>
-									<!--<Text text="{Address}"/>-->
-									<!--<Text text="{Country}"/>-->
+									<Switch state="{= ${jsonModel>switchStatus} === true ? true : false}" change="onChangeActive" type="AcceptReject"
+										enabled="{jsonModel>switchEnable}"/>
 								</cells>
 							</ColumnListItem>
 						</items>
 					</Table>
 				</content>
+				<footer id="footerBtn">
+					<OverflowToolbar visible="{jsonModel>/visibleFooter}">
+						<ToolbarSpacer/>
+						<Button type="Emphasized" text="Update" press="handleAccessUpdate"/>
+						<Button type="Reject" text="Cancel" press="handleCancelEdit"/>
+					</OverflowToolbar>
+				</footer>
 			</Page>
 		</detailPages>
 	</SplitApp>
 </mvc:View>
-<!--<mvc:View controllerName="com.9b.useracc.controller.LabResults" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f"-->
-<!--	xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns:table="sap.ui.table" xmlns:grid="sap.ui.layout.cssgrid"-->
-<!--	xmlns:viz.data="sap.viz.ui5.data" xmlns:viz="sap.viz.ui5.controls" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"-->
-<!--	xmlns:commons="sap.suite.ui.commons" xmlns:tnt="sap.tnt">-->
-<!--	<f:DynamicPage id="dynamicPageId" showFooter="true" class="dyPage custFDynamicPageTitle" xmlns:l="sap.ui.layout">-->
-<!--		<f:title>-->
-<!--			<f:DynamicPageTitle>-->
-<!--				<f:actions>-->
-<!--					<Text text="{i18n>License}"></Text>-->
-<!--					<Select busy="{jsonModel>/licBusy}" id="license" width="18rem" change="onChanageLicenseType" items="{jsonModel>/licenseList}"-->
-<!--						selectedKey="{jsonModel>/selectedLicense}">-->
-<!--						<core:Item key="{jsonModel>Code}" text="{jsonModel>Name} - {jsonModel>Code}"/>-->
-<!--					</Select>-->
-<!--					<Button icon="sap-icon://refresh" press="onPlantsRefresh" type="Default"/>-->
-<!--				</f:actions>-->
-<!--				<f:navigationActions>-->
-<!--					<tnt:InfoLabel class="metrcItem" text="{jsonModel>/METRCText}" colorScheme="{jsonModel>/METRCColorCode}"/>-->
-<!--					<Button text="{jsonModel>/refreshText}" type="Transparent" enabled="false" class="lastUpdate" width="13rem"/>-->
-<!--				</f:navigationActions>-->
-<!--			</f:DynamicPageTitle>-->
-<!--		</f:title>-->
-<!--		<f:header>-->
-<!--			<f:DynamicPageHeader pinnable="false"></f:DynamicPageHeader>-->
-<!--		</f:header>-->
-<!--		<f:content>-->
-<!--			<VBox height="100%">-->
-<!--				<VBox height="100%" class="fullHeight" width="100%">-->
-<!--					<table:Table class="uiTableTable" id="labResultsTable" selectionMode="Single" rowSelectionChange="handleRowSelection" cellClick="cellClick"-->
-<!--						visibleRowCountMode="Auto" rows="{path:'jsonModel>/cloneTableData'}" customFilter="onFilterTable">-->
-<!--						<table:extension>-->
-<!--							<OverflowToolbar>-->
-<!--								<Text class="tableTitle" id="tableHeader" text="{i18n>Batches}"/>-->
-<!--								<ToolbarSpacer/>-->
-<!--								<MultiInput width="25rem" placeholder="Search" tokenUpdate="tokenUpdateMultiInput" submit="onSubmitMultiInput" showValueHelp="false"-->
-<!--									liveChange="onChangeMultiInput" id="searchFieldTable" enableMultiLineMode="true"/>-->
-<!--								<Button text="{i18n>ClearAllFilters}" press="clearAllFilters"/>-->
-<!--								<Text class="sapMTBSeparator"/>-->
-<!--								<Button text="{i18n>ReceiveClones}" press="receiveClones" type="Default" visible="{jsonModel>/recClone}"/>-->
-<!--							</OverflowToolbar>-->
-<!--							<OverflowToolbar visible="false" id="searchFieldTable2" active="true" design="Info" height="2rem" press="onToolbarPress"-->
-<!--								ariaLabelledBy="myText">-->
-<!--								<Text text="{i18n>FilteredBy} : "/>-->
-<!--								<Text id="searchFieldTable1" text="{i18n>Thereshouldbenointeractiveelementsinthetoolbar}"/>-->
-<!--								<ToolbarSpacer/>-->
-<!--								<core:Icon press="onCloseRefreshChart" src="sap-icon://undo" width="2rem"/>-->
-<!--							</OverflowToolbar>-->
-<!--						</table:extension>-->
-<!--						<table:columns>-->
-<!--							<table:Column id="UserNameboth" sortProperty="UserName" filterProperty="UserName" tooltip="UserName" width="20rem">-->
-<!--								<Label text="User Name" design="Bold"/>-->
-<!--								<table:template>-->
-<!--									<Text text="{jsonModel>UserName}" wrapping="true"/>-->
-<!--									<VBox>-->
-<!--										<Text text="{jsonModel>UserName}" wrapping="false" class="usernameText"/>-->
-<!--										<Text text="{jsonModel>UserCode}" wrapping="false" class="usercodeText"/>-->
-<!--									</VBox>-->
-<!--								</table:template>-->
-<!--							</table:Column>-->
-<!--						</table:columns>-->
-<!--					</table:Table>-->
-<!--				</VBox>-->
-<!--			</VBox>-->
-<!--		</f:content>-->
-<!--	</f:DynamicPage>-->
-<!--</mvc:View>-->
