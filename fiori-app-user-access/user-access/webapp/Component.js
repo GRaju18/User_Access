@@ -49,11 +49,11 @@ sap.ui.define([
 				createMode: false,
 				serLayerbaseUrl: "https://ghdev.seedandbeyond.com:50000",
 				userAuthPayload: {
-					"CompanyDB": "QAS",
+					"CompanyDB": "__QAS",
 					"UserName": "aag11163",
-					"Password": "#!GLaSs@HoUsE!#9174!#"
+					"Password": "#!GLaSs@HoUsE!#91174!#"
 				},
-				
+
 				//set the app navigation URL model
 				serviceLayerbaseUrl: "https://demo.seedandbeyond.com/webx/index.html#",
 				target: {
@@ -81,7 +81,7 @@ sap.ui.define([
 				});
 			});
 
-		//	this.addChangeLog();
+			//	this.addChangeLog();
 
 		},
 

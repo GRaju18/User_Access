@@ -1,7 +1,7 @@
-<mvc:View controllerName="com.9b.useracc.controller.UserAccess" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f"
-	xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns:table="sap.ui.table" xmlns:grid="sap.ui.layout.cssgrid"
-	xmlns:viz.data="sap.viz.ui5.data" xmlns:viz="sap.viz.ui5.controls" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
-	xmlns:commons="sap.suite.ui.commons" xmlns:tnt="sap.tnt">
+<mvc:View controllerName="com.9b.useracc.controller.UserAccess" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core"
+	xmlns:layout="sap.ui.layout" xmlns:table="sap.ui.table" xmlns:grid="sap.ui.layout.cssgrid" xmlns:viz.data="sap.viz.ui5.data"
+	xmlns:viz="sap.viz.ui5.controls" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:commons="sap.suite.ui.commons"
+	xmlns:tnt="sap.tnt" xmlns:f="sap.ui.layout.form">
 	<SplitApp id="SplitApp">
 		<masterPages>
 			<Page class="myCustomPageMargin">
@@ -19,25 +19,67 @@
 					<Button type="Emphasized" text="Edit" press="handleEdit"/>
 				</headerContent>
 				<content>
-					<Table id="taable" items="{jsonModel>/compressedData}">
-						<columns>
-							<Column>
-								<Text text="License"/>
-							</Column>
-							<Column>
-								<Text text="Status"/>
-							</Column>
-						</columns>
-						<items id="there">
-							<ColumnListItem >
-								<cells>
-									<Text text="{jsonModel>U_MetrcLicense}"/>
-									<Switch state="{= ${jsonModel>switchStatus} === true ? true : false}" change="onChangeActive" type="AcceptReject"
-										enabled="{jsonModel>switchEnable}"/>
-								</cells>
-							</ColumnListItem>
-						</items>
-					</Table>
+					<VBox fitContainer="true">
+						<IconTabBar upperCase="true" expandable="false" applyContentPadding="true" class="sapUiResponsiveContentPadding">
+							<items>
+								<!--<IconTabFilter key="APIKey" text="API Key"/>-->
+								<!--<IconTabFilter key="Licenses" text="Licenses"/>-->
+								<IconTabFilter text="API Key" key="APIKey">
+									<VBox class="sapUiSmallMargin">
+										<f:SimpleForm id="SimpleFormChange471" editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4" labelSpanM="4"
+											labelSpanS="12" adjustLabelSpan="false" emptySpanXL="1" emptySpanL="1" emptySpanM="1" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+											singleContainerFullSize="true">
+											<f:content>
+												<Label text="API Key"/>
+												<Input id="apiKey" value="" editable="false"/>
+											</f:content>
+										</f:SimpleForm>
+									</VBox>
+								</IconTabFilter>
+								<IconTabFilter text="Licenses" key="Licenses">
+									<Table id="taable" items="{jsonModel>/compressedData}">
+										<columns>
+											<Column>
+												<Text text="License"/>
+											</Column>
+											<Column>
+												<Text text="Status"/>
+											</Column>
+										</columns>
+										<items id="there">
+											<ColumnListItem >
+												<cells>
+													<Text text="{jsonModel>U_MetrcLicense}"/>
+													<Switch state="{= ${jsonModel>switchStatus} === true ? true : false}" change="onChangeActive" type="AcceptReject"
+														enabled="{jsonModel>switchEnable}"/>
+												</cells>
+											</ColumnListItem>
+										</items>
+									</Table>
+								</IconTabFilter>
+							</items>
+							<content></content>
+						</IconTabBar>
+					</VBox>
+					<!--<Table id="taable" items="{jsonModel>/compressedData}">-->
+					<!--	<columns>-->
+					<!--		<Column>-->
+					<!--			<Text text="License"/>-->
+					<!--		</Column>-->
+					<!--		<Column>-->
+					<!--			<Text text="Status"/>-->
+					<!--		</Column>-->
+					<!--	</columns>-->
+					<!--	<items id="there">-->
+					<!--		<ColumnListItem >-->
+					<!--			<cells>-->
+					<!--				<Text text="{jsonModel>U_MetrcLicense}"/>-->
+					<!--				<Switch state="{= ${jsonModel>switchStatus} === true ? true : false}" change="onChangeActive" type="AcceptReject"-->
+					<!--					enabled="{jsonModel>switchEnable}"/>-->
+					<!--			</cells>-->
+					<!--		</ColumnListItem>-->
+					<!--	</items>-->
+					<!--</Table>-->
 				</content>
 				<footer id="footerBtn">
 					<OverflowToolbar visible="{jsonModel>/visibleFooter}">

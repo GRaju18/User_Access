@@ -59,7 +59,7 @@ sap.ui.define([
 			if (!licenseNo) {
 				licenseNo = jsonModel.getProperty("/licenseList")[0].Code;
 			}
-			var fields = "?$select=InternalKey,UserCode,UserName,U_License&$orderby=UserName asc";
+			var fields = "?$select=InternalKey,UserCode,UserName,U_License,U_APIKey&$orderby=UserName asc";
 			this.readServiecLayer("/b1s/v2/Users" + fields, function (data) {
 				jsonModel.setProperty("/cloneTableData", data.value);
 				this.byId("tableHeader").setText("Users (" + data.value.length + "/" + data.value.length + ")");
@@ -73,6 +73,10 @@ sap.ui.define([
 			var binlocationsData = jsonModel.getProperty("/binlocationsData");
 			jsonModel.setProperty("/compressedData", "");
 			var docNo = evt.getParameter("listItem").getBindingContext("jsonModel").getObject().U_License;
+
+			var APIKey = evt.getParameter("listItem").getBindingContext("jsonModel").getObject().U_APIKey;
+			this.byId("apiKey").setValue(APIKey);
+
 			this.InternalKey = evt.getParameter("listItem").getBindingContext("jsonModel").getObject().InternalKey;
 			jsonModel.setProperty("/oClickedRowData", evt.getParameter("listItem").getBindingContext("jsonModel").getObject());
 			var oClickedRowData = JSON.parse(docNo);
@@ -127,6 +131,7 @@ sap.ui.define([
 			});
 		},
 		handleEdit: function () {
+			this.byId("apiKey").setEditable(true);
 			var jsonModel = this.getOwnerComponent().getModel("jsonModel");
 			var compressedData = jsonModel.getProperty("/compressedData");
 			$.each(compressedData, function (i, n) {
@@ -136,6 +141,7 @@ sap.ui.define([
 			this.getOwnerComponent().getModel("jsonModel").setProperty("/visibleFooter", true);
 		},
 		handleCancelEdit: function () {
+			this.byId("apiKey").setEditable(false);
 			var jsonModel = this.getOwnerComponent().getModel("jsonModel");
 			var compressedData = jsonModel.getProperty("/compressedData");
 			$.each(compressedData, function (i, n) {
@@ -157,6 +163,7 @@ sap.ui.define([
 			var InternalKey = that.InternalKey;
 			var jsonModel = this.getOwnerComponent().getModel("jsonModel");
 			var sItems = jsonModel.getProperty("/compressedData");
+			var ApiKey = this.byId("apiKey").getValue();
 			var batchUrl = [];
 			var payLoadObj = [];
 			$.each(sItems, function (i, e) {
@@ -167,7 +174,8 @@ sap.ui.define([
 				}
 			});
 			var payLoadAcess = {
-				"U_License": JSON.stringify(payLoadObj)
+				"U_License": JSON.stringify(payLoadObj),
+				"U_APIKey": ApiKey
 			};
 			batchUrl.push({
 				url: "/b1s/v2/Users(" + Number(InternalKey) + ")",
@@ -229,88 +237,7 @@ sap.ui.define([
 				}
 			});
 			this.byId("labResultsTable").getBinding("rows").filter(andFilter);
-		},
-		// onChangeActive: function (evt) {
-		// 	var that = this;
-		// 	var buttonState = evt.getParameter("state");
-		// 	var jsonModel = this.getOwnerComponent().getModel("jsonModel");
-		// 	var oClickedRowData = jsonModel.getProperty("/oClickedRowData");
-		// 	var oContext = evt.getSource().getParent().getBindingContext("jsonModel");
-		// 	var oModel = oContext.getModel();
-		// 	var sPath = oContext.getPath();
-		// 	var oData = oModel.getProperty(sPath).U_MetrcLicense;
-
-		// 	var filter = "?$filter=UserName eq '" + oClickedRowData.UserName + "' ";
-		// 	var fields = "&$select=InternalKey,UserCode,UserName,U_License";
-		// 	this.readServiecLayer("/b1s/v2/Users" + filter + fields, function (data) {
-		// 		jsonModel.setProperty("/simpleData", data.value);
-		// 		if (buttonState) {
-		// 			if (JSON.parse(data.value[0].U_License) != null) {
-		// 				var Arr = [];
-		// 				var obj2 = {
-		// 					"key": oData
-		// 				};
-		// 				Arr.push(obj2);
-		// 				$.each(JSON.parse(data.value[0].U_License), function (i, m) {
-		// 					var Obj = {
-		// 						"key": m.key
-		// 					};
-		// 					Arr.push(Obj);
-		// 				});
-		// 				var payload = JSON.stringify(Arr);
-		// 				var uploadPayLoad = {
-		// 					"U_License": payload
-		// 				};
-		// 				var ok = uploadPayLoad;
-		// 				that.updateServiecLayer("/b1s/v2/Users(" + Number(data.value[0].InternalKey) + ")", function () {
-		// 					that.loadMasterData();
-		// 				}.bind(that), uploadPayLoad, "PATCH");
-		// 			} else {
-		// 				var obj = {
-		// 					"key": oData
-		// 				};
-		// 				var Arr = [];
-		// 				Arr.push(obj);
-		// 				var payload = JSON.stringify(Arr);
-		// 				var uploadPayLoad = {
-		// 					"U_License": payload,
-		// 				};
-		// 				var ok = uploadPayLoad;
-		// 				that.updateServiecLayer("/b1s/v2/Users(" + Number(data.value[0].InternalKey) + ")", function () {
-		// 					that.loadMasterData();
-		// 				}.bind(that), uploadPayLoad, "PATCH");
-		// 			}
-		// 		} else {
-		// 			if (JSON.parse(data.value[0].U_License) != null) {
-		// 				var Arr = [];
-		// 				var lisence = oData;
-		// 				$.each(JSON.parse(data.value[0].U_License), function (i, m) {
-		// 					if (m.key != lisence) {
-		// 						var Obj = {
-		// 							"key": m.key
-		// 						};
-		// 						Arr.push(Obj);
-		// 					}
-		// 				});
-		// 				var payload = JSON.stringify(Arr);
-		// 				var uploadPayLoad = {
-		// 					"U_License": payload
-		// 				};
-		// 				var ok = uploadPayLoad;
-		// 				that.updateServiecLayer("/b1s/v2/Users(" + Number(data.value[0].InternalKey) + ")", function () {
-		// 					that.loadMasterData();
-		// 				}.bind(that), uploadPayLoad, "PATCH");
-		// 			} else {
-		// 				var nullobj = {
-		// 					"U_License": null
-		// 				};
-		// 				that.updateServiecLayer("/b1s/v2/Users(" + Number(data.value[0].InternalKey) + ")", function () {
-		// 					that.loadMasterData();
-		// 				}.bind(that), nullobj, "PATCH");
-		// 			}
-		// 		}
-		// 	});
-		// },
+		}
 
 	});
 });
